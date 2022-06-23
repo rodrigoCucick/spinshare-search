@@ -42,8 +42,18 @@ export class PagerController {
         this.updateCounter();
     }
     enableDisablePagerButtons() {
-        this._prevBtn.disabled = this.pageNumber == 1;
-        this._nextBtn.disabled = this.pageNumber == this.pageTotal;
+        this.enableDisableButton(this._prevBtn, this.pageNumber == 1);
+        this.enableDisableButton(this._nextBtn, this.pageNumber == this.pageTotal);
+    }
+    enableDisableButton(btn, condition) {
+        if (condition) {
+            btn.disabled = true;
+            btn.classList.add("disabled-btn");
+        }
+        else {
+            btn.disabled = false;
+            btn.classList.remove("disabled-btn");
+        }
     }
     prevPage() {
         this._pageNumber--;

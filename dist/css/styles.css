@@ -55,7 +55,8 @@ hr {
     width: 100%;
     height: 30px;
     border-radius: 5px;
-    cursor: pointer !important;
+    cursor: pointer;
+    pointer-events: all;
     border: 1px solid;
     border-color: #575A5E;
     background-color: #222823;
@@ -135,7 +136,8 @@ hr {
     width: 100px;
     height: 30px;
     border-radius: 5px;
-    cursor: pointer !important;
+    cursor: pointer;
+    pointer-events: all;
     border: 1px solid;
     border-color: #575A5E;
     background-color: #222823;
@@ -163,5 +165,7 @@ hr {
 }
 
 .disabled-btn {
-    cursor: none;
+    background-color: #575A5E;
+    cursor: none !important;
+    pointer-events: none;
 }
