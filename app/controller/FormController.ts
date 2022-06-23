@@ -10,12 +10,16 @@ export class FormController {
     private _diffRatingToInp:   HTMLInputElement  = document.querySelector("#diffRatingTo");
     private _showExplicitChk:   HTMLInputElement  = document.querySelector("#showExplicit");
     private _searchChartsBtn:   HTMLButtonElement = document.querySelector("#searchCharts");
+    private _formSpinner:       HTMLElement       = document.querySelector("#formSpinner");
+
+    constructor() {
+        this.setEventListeners();
+    }
 
     get searchForm(): HTMLFormElement {
         return this._searchForm;
     }
 
-    // TODO - Rodrigo: Implement a search cache system.
     get jsonBody(): string {
         return JSON.stringify({
             searchQuery:    this._searchQueryInp.value,
@@ -36,5 +40,28 @@ export class FormController {
 
     isDiffRatingValid(): boolean {
         return this._diffRatingFromInp.value <= this._diffRatingToInp.value;
+    }
+
+    private hideSearchButton(): void {
+        this._searchChartsBtn.classList.add("search-button-effect");
+    }
+
+    showSearchButton(): void {
+        this._searchChartsBtn.classList.remove("search-button-effect");
+    }
+
+    private showSpinner(): void {
+        this._formSpinner.classList.remove("fade-out");
+    }
+
+    hideSpinner(): void {
+        this._formSpinner.classList.add("fade-out");
+    }
+
+    setEventListeners(): void {
+        this._searchChartsBtn.addEventListener("click", () => {
+            this.hideSearchButton();
+            this.showSpinner();
+        })
     }
 }

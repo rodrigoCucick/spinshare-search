@@ -66,6 +66,8 @@ export class RequestController {
             .then(response => response.json())
             .then(json => {
                 this._json = json;
+                this._formController.hideSpinner();
+                this._formController.showSearchButton();
                 if (this._json.data.length > 0) {
                     this._pagerController.setCounterInitialState(this._json.data.length);
                     this.displayResults();

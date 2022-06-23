@@ -67,16 +67,6 @@ export class PagerController {
         this.enableDisableButton(this._nextBtn, this.pageNumber == this.pageTotal);
     }
 
-    private enableDisableButton(btn: HTMLButtonElement, condition: boolean): void {
-        if (condition) {
-            btn.disabled = true;
-            btn.classList.add("disabled-btn");
-        } else {
-            btn.disabled = false;
-            btn.classList.remove("disabled-btn");
-        }
-    }
-
     prevPage(): void {
         this._pageNumber--;
         this.updateCounter();
@@ -85,5 +75,15 @@ export class PagerController {
     nextPage(): void {
         this._pageNumber++;
         this.updateCounter();
+    }
+
+    private enableDisableButton(btn: HTMLButtonElement, condition: boolean): void {
+        if (condition) {
+            btn.disabled = true;
+            btn.classList.add("disabled-btn");
+        } else {
+            btn.disabled = false;
+            btn.classList.remove("disabled-btn");
+        }
     }
 }
