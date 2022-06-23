@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Spin Rhythm Charts Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;1,100;1,400&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="radial-gradient-bg">
+    <div id="apiStatusView" class="api-status-div" title="Click to refresh the API status."></div>
+
+    <div class="centered-div">
+        <h2 class="centered-text">Spin Rhythm XD Custom Charts Search</h2>
+
+        <fieldset class="margin-bottom-10">
+            <div class="div-form">
+                <form id="searchForm">
+                    <div>
+                        <label for="searchQuery">Search for:</label>
+                        <input id="searchQuery" name="searchQuery" class="text-input" type="text">
+                    </div>
+
+                    <div class="form-check form-check-inline margin-top-10">
+                        <label for="diffEasy" class="form-check-label">Easy?</label>
+                        <input id="diffEasy" name="diffEasy" class="form-check-input cursor-pointer" type="checkbox" checked>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <label for="diffNormal" class="form-check-label">Normal?</label>
+                        <input id="diffNormal" name="diffNormal" class="form-check-input cursor-pointer" type="checkbox" checked>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <label for="diffHard" class="form-check-label">Hard?</label>
+                        <input id="diffHard" name="diffHard" class="form-check-input cursor-pointer" type="checkbox" checked>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <label for="diffExpert" class="form-check-label">Expert?</label>
+                        <input id="diffExpert" name="diffExpert" class="form-check-input cursor-pointer" type="checkbox" checked>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <label for="diffXD" class="form-check-label">XD?</label>
+                        <input id="diffXD" name="diffXD" class="form-check-input cursor-pointer" type="checkbox" checked>
+                    </div>
+
+                    <div class="margin-top-10">
+                        <label for="diffRatingFrom">Difficulty rating from:</label>
+                        <input id="diffRatingFrom" name="diffRatingFrom" class="number-input" type="number" min="0" max="99" step="1" value="0">
+
+                        <label for="diffRatingTo">To:</label>
+                        <input id="diffRatingTo" name="diffRatingTo" class="number-input" type="number" min="0" max="99" step="1" value="99">
+
+                        <div class="form-check form-check-inline">
+                            <label for="showExplicit" class="form-check-label">Show explicit?</label>
+                            <input id="showExplicit" name="showExplicit" class="form-check-input cursor-pointer" type="checkbox">
+                        </div>
+                    </div>
+
+                    <div class="search-button-div margin-top-10">
+                        <button id="searchCharts" class="search-button" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+    </div>
+
+    <div id="searchResultsView" class="margin-top-10"></div>
+
+    <div id="pagerContainer" class="footer-div margin-top-10 hidden">
+        <button id="btnPrevious" class="pager-button margin-bottom-10">Previous</button>
+        <span id="pageCounter" class="page-counter-text margin-bottom-10"></span>
+        <button id="btnNext" class="pager-button margin-bottom-10">Next</button>
+    </div>
+
+    <hr>
+    <footer class="footer-div margin-top-10">
+        <p class="margin-top-10">
+            <a href="https://github.com/rodrigoCucick"><img src="./res/githubLogoLight.png" alt="" title="GitHub Repository"></a>
+            <a href="https://www.youtube.com/c/RodrigoCucick"><img src="./res/youtubeLogo.png" alt="" title="YouTube Channel" width="32px" height="32px"></a>
+            <p>Rodrigo M. Cucick, 2022.</p>
+        </p>
+    </footer>
+
+    <script type="module" src="./js/app.js"></script>
+</body>
+</html>
