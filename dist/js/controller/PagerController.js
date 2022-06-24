@@ -1,27 +1,37 @@
 export class PagerController {
     constructor() {
+        // Pager elements.
         this._pagerContainer = document.querySelector("#pagerContainer");
         this._prevBtn = document.querySelector("#btnPrevious");
         this._nextBtn = document.querySelector("#btnNext");
         this._counter = document.querySelector("#pageCounter");
     }
-    get prevBtn() {
-        return this._prevBtn;
-    }
     get nextBtn() {
         return this._nextBtn;
-    }
-    get counter() {
-        return this._counter;
     }
     get pageNumber() {
         return this._pageNumber;
     }
-    get pageTotal() {
-        return this._totalPages;
+    get prevBtn() {
+        return this._prevBtn;
     }
-    get totalCharts() {
-        return this._totalCharts;
+    setCounterInitialState(total) {
+        this._pageNumber = 1;
+        this._totalCharts = total;
+        this.calculateTotalPages();
+        this.updateCounter();
+    }
+    prevPage() {
+        this._pageNumber--;
+        this.updateCounter();
+    }
+    nextPage() {
+        this._pageNumber++;
+        this.updateCounter();
+    }
+    enableDisablePagerButtons() {
+        this.enableDisableButton(this._prevBtn, this.pageNumber == 1);
+        this.enableDisableButton(this._nextBtn, this.pageNumber == this._totalPages);
     }
     showPager() {
         this._pagerContainer.classList.remove("hidden");
@@ -34,24 +44,6 @@ export class PagerController {
     }
     calculateTotalPages() {
         this._totalPages = Math.ceil(this._totalCharts / 50);
-    }
-    setCounterInitialState(total) {
-        this._pageNumber = 1;
-        this._totalCharts = total;
-        this.calculateTotalPages();
-        this.updateCounter();
-    }
-    enableDisablePagerButtons() {
-        this.enableDisableButton(this._prevBtn, this.pageNumber == 1);
-        this.enableDisableButton(this._nextBtn, this.pageNumber == this.pageTotal);
-    }
-    prevPage() {
-        this._pageNumber--;
-        this.updateCounter();
-    }
-    nextPage() {
-        this._pageNumber++;
-        this.updateCounter();
     }
     enableDisableButton(btn, condition) {
         if (condition) {

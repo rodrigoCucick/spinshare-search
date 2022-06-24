@@ -1,5 +1,6 @@
 import { ApiStatusView } from "../view/ApiStatusView.js";
 import { SearchResultsView } from "../view/SearchResultsView.js";
+import { AlertsController } from "./AlertsController.js";
 import { FormController } from "./FormController.js";
 import { PagerController } from "./PagerController.js";
 export class RequestController {
@@ -14,26 +15,28 @@ export class RequestController {
         this._apiStatusView = new ApiStatusView("#apiStatusView");
         this._searchResultsView = new SearchResultsView("#searchResultsView");
         // Controllers.
+        this._alertController = new AlertsController();
         this._formController = new FormController();
         this._pagerController = new PagerController();
         this.setEventListeners();
-        this.ping();
+        this.ping(); // First ping is when an object of this class is instantiated.
     }
-    setEventListeners() {
-        this._apiStatusView.element.addEventListener("click", () => {
-            this.ping();
-        });
-        this._formController.searchForm.addEventListener("submit", event => {
-            event.preventDefault();
-            this.searchCharts();
-        });
-        this._pagerController.prevBtn.addEventListener("click", () => {
-            this._pagerController.prevPage();
-            this.displayResults();
-        });
-        this._pagerController.nextBtn.addEventListener("click", () => {
-            this._pagerController.nextPage();
-            this.displayResults();
+    searchCharts() {
+        fetch(this._searchChartsURL, {
+            method: "POST",
+            body: this._formController.jsonBody
+        })
+            .then(response => response.json())
+            .then(json => {
+            this._json = json;
+            this._formController.stopLoadingAnimation();
+            if (this._json.data.length > 0) {
+                this._pagerController.setCounterInitialState(this._json.data.length);
+                this.displayResults();
+            }
+            else {
+                this.hidePagerAndTable();
+            }
         });
     }
     ping() {
@@ -42,35 +45,43 @@ export class RequestController {
             .then(response => response.json())
             .then(json => this._apiStatusView.update(json.pong));
     }
-    searchCharts() {
-        if (this._formController.isDiffRatingInvalid()) {
-            // TODO - Rodrigo: Display validation error message.
-            return;
-        }
-        fetch(this._searchChartsURL, {
-            method: "POST",
-            body: this._formController.jsonBody
-        })
-            .then(response => response.json())
-            .then(json => {
-            this._json = json;
-            this._formController.hideSpinner();
-            this._formController.showSearchButton();
-            if (this._json.data.length > 0) {
-                this._pagerController.setCounterInitialState(this._json.data.length);
-                this.displayResults();
+    setEventListeners() {
+        // API status div.
+        this._apiStatusView.element.addEventListener("click", () => {
+            this.ping();
+        });
+        // Pager Previous button.
+        this._pagerController.prevBtn.addEventListener("click", () => {
+            this._pagerController.prevPage();
+            this.displayResults();
+        });
+        // Pager Next button.
+        this._pagerController.nextBtn.addEventListener("click", () => {
+            this._pagerController.nextPage();
+            this.displayResults();
+        });
+        // Form Search button.
+        this._formController.searchChartsBtn.addEventListener("click", () => {
+            if (this._formController.isDiffRatingInvalid) {
+                this._alertController.showAlert("Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!", this._formController.diffRatingFromInp);
+                return;
             }
-            else {
-                this._searchResultsView.hide();
-                this._pagerController.hidePager();
-            }
+            this._formController.startLoadingAnimation();
+            this.searchCharts();
         });
     }
     displayResults() {
         this._pagerController.enableDisablePagerButtons();
         this._searchResultsView.pageNumber = this._pagerController.pageNumber;
         this._searchResultsView.update(this._json);
+        this.showPagerAndTable();
+    }
+    showPagerAndTable() {
         this._searchResultsView.show();
         this._pagerController.showPager();
+    }
+    hidePagerAndTable() {
+        this._searchResultsView.hide();
+        this._pagerController.hidePager();
     }
 }

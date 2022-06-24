@@ -14,8 +14,11 @@ export class FormController {
         this._formSpinner = document.querySelector("#formSpinner");
         this.setEventListeners();
     }
-    get searchForm() {
-        return this._searchForm;
+    get diffRatingFromInp() {
+        return this._diffRatingFromInp;
+    }
+    get isDiffRatingInvalid() {
+        return Number.parseInt(this._diffRatingFromInp.value) > Number.parseInt(this._diffRatingToInp.value);
     }
     get jsonBody() {
         return JSON.stringify({
@@ -30,28 +33,32 @@ export class FormController {
             showExplicit: this._showExplicitChk.checked
         });
     }
-    isDiffRatingInvalid() {
-        return this._diffRatingFromInp.value > this._diffRatingToInp.value;
+    get searchChartsBtn() {
+        return this._searchChartsBtn;
     }
-    isDiffRatingValid() {
-        return this._diffRatingFromInp.value <= this._diffRatingToInp.value;
+    startLoadingAnimation() {
+        this.hideSearchButton();
+        this.showSpinner();
     }
-    hideSearchButton() {
-        this._searchChartsBtn.classList.add("search-button-effect");
+    stopLoadingAnimation() {
+        this.hideSpinner();
+        this.showSearchButton();
+    }
+    setEventListeners() {
+        this._searchForm.addEventListener("submit", event => {
+            event.preventDefault();
+        });
     }
     showSearchButton() {
         this._searchChartsBtn.classList.remove("search-button-effect");
+    }
+    hideSearchButton() {
+        this._searchChartsBtn.classList.add("search-button-effect");
     }
     showSpinner() {
         this._formSpinner.classList.remove("fade-out");
     }
     hideSpinner() {
         this._formSpinner.classList.add("fade-out");
-    }
-    setEventListeners() {
-        this._searchChartsBtn.addEventListener("click", () => {
-            this.hideSearchButton();
-            this.showSpinner();
-        });
     }
 }

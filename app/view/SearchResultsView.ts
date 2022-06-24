@@ -4,7 +4,7 @@ export class SearchResultsView extends View<any> {
     private _tableClasses: string = "table table-dark table-striped table-hover";
     private _pageNumber: number = 1;
 
-    template(model: any): string {
+    protected template(model: any): string {
         return `
         <table class="${this._tableClasses}">
             <thead>

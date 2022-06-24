@@ -1,23 +1,27 @@
 export class FormController {
-    private _searchForm:        HTMLFormElement   = document.querySelector("#searchForm");
-    private _searchQueryInp:    HTMLInputElement  = document.querySelector("#searchQuery");
-    private _diffEasyChk:       HTMLInputElement  = document.querySelector("#diffEasy");
-    private _diffNormalChk:     HTMLInputElement  = document.querySelector("#diffNormal");
-    private _diffHardChk:       HTMLInputElement  = document.querySelector("#diffHard");
-    private _diffExpertChk:     HTMLInputElement  = document.querySelector("#diffExpert");
-    private _diffXDChk:         HTMLInputElement  = document.querySelector("#diffXD");
-    private _diffRatingFromInp: HTMLInputElement  = document.querySelector("#diffRatingFrom");
-    private _diffRatingToInp:   HTMLInputElement  = document.querySelector("#diffRatingTo");
-    private _showExplicitChk:   HTMLInputElement  = document.querySelector("#showExplicit");
-    private _searchChartsBtn:   HTMLButtonElement = document.querySelector("#searchCharts");
-    private _formSpinner:       HTMLElement       = document.querySelector("#formSpinner");
+    private _searchForm: HTMLFormElement = document.querySelector("#searchForm");
+    private _searchQueryInp: HTMLInputElement = document.querySelector("#searchQuery");
+    private _diffEasyChk: HTMLInputElement = document.querySelector("#diffEasy");
+    private _diffNormalChk: HTMLInputElement = document.querySelector("#diffNormal");
+    private _diffHardChk: HTMLInputElement = document.querySelector("#diffHard");
+    private _diffExpertChk: HTMLInputElement = document.querySelector("#diffExpert");
+    private _diffXDChk: HTMLInputElement = document.querySelector("#diffXD");
+    private _diffRatingFromInp: HTMLInputElement = document.querySelector("#diffRatingFrom");
+    private _diffRatingToInp: HTMLInputElement = document.querySelector("#diffRatingTo");
+    private _showExplicitChk: HTMLInputElement = document.querySelector("#showExplicit");
+    private _searchChartsBtn: HTMLButtonElement = document.querySelector("#searchCharts");
+    private _formSpinner: HTMLElement = document.querySelector("#formSpinner");
 
     constructor() {
         this.setEventListeners();
     }
 
-    get searchForm(): HTMLFormElement {
-        return this._searchForm;
+    get diffRatingFromInp(): HTMLInputElement {
+        return this._diffRatingFromInp;
+    }
+
+    get isDiffRatingInvalid(): boolean {
+        return Number.parseInt(this._diffRatingFromInp.value) > Number.parseInt(this._diffRatingToInp.value);
     }
 
     get jsonBody(): string {
@@ -34,34 +38,39 @@ export class FormController {
         });
     }
 
-    isDiffRatingInvalid(): boolean {
-        return this._diffRatingFromInp.value > this._diffRatingToInp.value;
+    get searchChartsBtn(): HTMLButtonElement {
+        return this._searchChartsBtn;
     }
 
-    isDiffRatingValid(): boolean {
-        return this._diffRatingFromInp.value <= this._diffRatingToInp.value;
+    public startLoadingAnimation(): void {
+        this.hideSearchButton();
+        this.showSpinner();
+    }
+
+    public stopLoadingAnimation(): void {
+        this.hideSpinner();
+        this.showSearchButton();
+    }
+
+    private setEventListeners(): void {
+        this._searchForm.addEventListener("submit", event => {
+            event.preventDefault();
+        });
+    }
+
+    private showSearchButton(): void {
+        this._searchChartsBtn.classList.remove("search-button-effect");
     }
 
     private hideSearchButton(): void {
         this._searchChartsBtn.classList.add("search-button-effect");
     }
 
-    showSearchButton(): void {
-        this._searchChartsBtn.classList.remove("search-button-effect");
-    }
-
     private showSpinner(): void {
         this._formSpinner.classList.remove("fade-out");
     }
 
-    hideSpinner(): void {
+    private hideSpinner(): void {
         this._formSpinner.classList.add("fade-out");
-    }
-
-    setEventListeners(): void {
-        this._searchChartsBtn.addEventListener("click", () => {
-            this.hideSearchButton();
-            this.showSpinner();
-        })
     }
 }

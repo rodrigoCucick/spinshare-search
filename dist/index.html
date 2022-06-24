@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body class="radial-gradient-bg">
+    <div id="blackBox" class="black-box hidden"></div>
+    <div id="alertsContainer" class="alerts-container hidden">
+        <h2>Information:</h2>
+        <div id="alertMessageView"></div>
+        <button id="btnAlert" class="pager-button">OK</button>
+    </div>
+
     <div id="apiStatusView" class="api-status-div" title="Click to refresh the API status."></div>
 
     <div class="centered-div">
@@ -53,7 +60,7 @@
                         <input id="diffRatingFrom" name="diffRatingFrom" class="number-input" type="number" min="0" max="99" step="1" value="0">
 
                         <label for="diffRatingTo">To:</label>
-                        <input id="diffRatingTo" name="diffRatingTo" class="number-input" type="number" min="0" max="99" step="1" value="99">
+                        <input id="diffRatingTo" name="diffRatingTo" class="number-input" type="number" min="0" max="999" step="1" value="99">
 
                         <div class="form-check form-check-inline">
                             <label for="showExplicit" class="form-check-label">Show explicit?</label>

@@ -5,22 +5,22 @@ export abstract class View<T> {
         this._element = document.querySelector(selector);
     }
 
-    // Getter used for adding event listeners to this element (RequestController).
+    protected abstract template(model: T): string;
+
+    // Getter should be used only for adding event listeners to this element.
     get element(): HTMLElement {
         return this._element;
     }
 
-    abstract template(model: T): string;
-
-    update(model: T): void {
+    public update(model: T): void {
         this._element.innerHTML = this.template(model);
     }
 
-    hide(): void {
-        this._element.classList.add("hidden");
+    public show(): void {
+        this._element.classList.remove("hidden");
     }
 
-    show(): void {
-        this._element.classList.remove("hidden");
+    public hide(): void {
+        this._element.classList.add("hidden");
     }
 }
