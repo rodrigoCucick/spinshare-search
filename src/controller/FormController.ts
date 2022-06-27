@@ -24,7 +24,7 @@ export class FormController {
         return Number.parseInt(this._diffRatingFromInp.value) > Number.parseInt(this._diffRatingToInp.value);
     }
 
-    get jsonBody(): string {
+    get requestJsonBody(): string {
         return JSON.stringify({
             searchQuery:    this._searchQueryInp.value,
             diffEasy:       this._diffEasyChk.checked,

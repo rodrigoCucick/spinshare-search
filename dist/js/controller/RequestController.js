@@ -1,3 +1,4 @@
+import { RequestService } from "../service/RequestService.js";
 import { ApiStatusView } from "../view/ApiStatusView.js";
 import { SearchResultsView } from "../view/SearchResultsView.js";
 import { AlertsController } from "./AlertsController.js";
@@ -6,7 +7,7 @@ import { PagerController } from "./PagerController.js";
 export class RequestController {
     constructor() {
         // Search response.
-        this._json = null;
+        this._searchChartsJson = null;
         // URLs.
         this._baseURL = "https://spinsha.re/api/";
         this._pingURL = `${this._baseURL}ping`;
@@ -22,28 +23,24 @@ export class RequestController {
         this.ping(); // First ping is when an object of this class is instantiated.
     }
     searchCharts() {
-        fetch(this._searchChartsURL, {
-            method: "POST",
-            body: this._formController.jsonBody
-        })
-            .then(response => response.json())
-            .then(json => {
-            this._json = json;
+        RequestService.searchCharts(this._searchChartsURL, this._formController.requestJsonBody)
+            .then((searchChartsJson) => {
+            this._searchChartsJson = searchChartsJson;
             this._formController.stopLoadingAnimation();
-            if (this._json.data.length > 0) {
-                this._pagerController.setCounterInitialState(this._json.data.length);
+            if (this._searchChartsJson.data.length > 0) {
+                this._pagerController.setCounterInitialState(this._searchChartsJson.data.length);
                 this.displayResults();
             }
             else {
+                // TODO - Rodrigo: Display info dialog about no results found.
                 this.hidePagerAndTable();
             }
         });
     }
     ping() {
         this._apiStatusView.update(null);
-        fetch(this._pingURL)
-            .then(response => response.json())
-            .then(json => this._apiStatusView.update(json.pong));
+        RequestService.ping(this._pingURL)
+            .then((pingJson) => this._apiStatusView.update(pingJson.pong));
     }
     setEventListeners() {
         // API status div.
@@ -73,7 +70,7 @@ export class RequestController {
     displayResults() {
         this._pagerController.enableDisablePagerButtons();
         this._searchResultsView.pageNumber = this._pagerController.pageNumber;
-        this._searchResultsView.update(this._json);
+        this._searchResultsView.update(this._searchChartsJson);
         this.showPagerAndTable();
     }
     showPagerAndTable() {

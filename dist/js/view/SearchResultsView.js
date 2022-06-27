@@ -2,8 +2,13 @@ import { View } from "./View.js";
 export class SearchResultsView extends View {
     constructor() {
         super(...arguments);
+        // Table variables.
         this._tableClasses = "table table-dark table-striped table-hover";
+        this._downloadIcon = "./res/downloadIcon.png";
+        this._fallbackAlbumArt = "./res/defaultAlbumArt.jpg";
+        // Pager variables.
         this._pageNumber = 1;
+        this._resultsPerPage = 50;
     }
     template(model) {
         return `
@@ -23,20 +28,20 @@ export class SearchResultsView extends View {
                 </tr>
             </thead>
             <tbody>
-            ${model.data.map((object, index) => {
-            if (index >= (this._pageNumber * 50) - 50 && index <= (this._pageNumber * 50) - 1) {
+            ${model.data.map((chart, index) => {
+            if (this.isInPaginationBoundaries(index)) {
                 return `
                     <tr>
-                        <td class="text-left" style="width: 60px;"><img class="table-img" style="z-index: ${model.data.length - index};" src="${object.cover}" onerror="this.src='./res/defaultAlbumArt.jpg'"></td>
-                        <td class="text-left">${object.title == null ? "N/A" : object.title}</td>
-                        <td class="text-left">${object.artist == null ? "N/A" : object.artist}</td>
-                        <td class="text-left">${object.charter == null ? "N/A" : object.charter}</td>
-                        <td class="text-center">${object.easyDifficulty == null ? "N/A" : object.easyDifficulty}</td>
-                        <td class="text-center">${object.normalDifficulty == null ? "N/A" : object.normalDifficulty}</td>
-                        <td class="text-center">${object.hardDifficulty == null ? "N/A" : object.hardDifficulty}</td>
-                        <td class="text-center">${object.expertDifficulty == null ? "N/A" : object.expertDifficulty}</td>
-                        <td class="text-center">${object.XDDifficulty == null ? "N/A" : object.XDDifficulty}</td>
-                        <td class="text-center"><a href="${object.zip == null ? "N/A" : object.zip}"><img class="download-btn-size" src="./res/downloadIcon.png"></a></td>
+                        <td class="text-left" style="width: 60px;"><img class="table-img" style="z-index: ${model.data.length - index};" src="${chart.cover}" onerror="this.src='${this._fallbackAlbumArt}'"></td>
+                        <td class="text-left">${chart.title == null ? "N/A" : chart.title}</td>
+                        <td class="text-left">${chart.artist == null ? "N/A" : chart.artist}</td>
+                        <td class="text-left">${chart.charter == null ? "N/A" : chart.charter}</td>
+                        <td class="text-center">${chart.easyDifficulty == null ? "N/A" : chart.easyDifficulty}</td>
+                        <td class="text-center">${chart.normalDifficulty == null ? "N/A" : chart.normalDifficulty}</td>
+                        <td class="text-center">${chart.hardDifficulty == null ? "N/A" : chart.hardDifficulty}</td>
+                        <td class="text-center">${chart.expertDifficulty == null ? "N/A" : chart.expertDifficulty}</td>
+                        <td class="text-center">${chart.XDDifficulty == null ? "N/A" : chart.XDDifficulty}</td>
+                        <td class="text-center"><a href="${chart.zip == null ? "N/A" : chart.zip}"><img class="download-btn-size" src="${this._downloadIcon}"></a></td>
                     </tr>
                     `;
             }
@@ -47,5 +52,15 @@ export class SearchResultsView extends View {
     }
     set pageNumber(pageNumber) {
         this._pageNumber = pageNumber;
+    }
+    isInPaginationBoundaries(index) {
+        return index >= this.calcLowerPaginationBoundaries()
+            && index <= this.calcUpperPaginationBoundaries();
+    }
+    calcLowerPaginationBoundaries() {
+        return (this._pageNumber * this._resultsPerPage) - this._resultsPerPage;
+    }
+    calcUpperPaginationBoundaries() {
+        return (this._pageNumber * this._resultsPerPage) - 1;
     }
 }

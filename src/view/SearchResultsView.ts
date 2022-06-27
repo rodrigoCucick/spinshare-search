@@ -1,10 +1,18 @@
+import { ChartData } from "../type/ChartData.js";
+import { SearchChartsBody } from "../type/SearchChartsBody.js";
 import { View } from "./View.js";
 
-export class SearchResultsView extends View<any> {
+export class SearchResultsView extends View<SearchChartsBody> {
+    // Table variables.
     private _tableClasses: string = "table table-dark table-striped table-hover";
-    private _pageNumber: number = 1;
+    private _downloadIcon: string = "./res/downloadIcon.png";
+    private _fallbackAlbumArt: string = "./res/defaultAlbumArt.jpg";
 
-    protected template(model: any): string {
+    // Pager variables.
+    private _pageNumber: number = 1;
+    private _resultsPerPage: number = 50;
+
+    protected template(model: SearchChartsBody): string {
         return `
         <table class="${this._tableClasses}">
             <thead>
@@ -22,20 +30,20 @@ export class SearchResultsView extends View<any> {
                 </tr>
             </thead>
             <tbody>
-            ${model.data.map((object: any, index: number) => {
-                if (index >= (this._pageNumber * 50) - 50 && index <= (this._pageNumber * 50) - 1) {
+            ${model.data.map((chart: ChartData, index: number) => {
+                if (this.isInPaginationBoundaries(index)) {
                     return `
                     <tr>
-                        <td class="text-left" style="width: 60px;"><img class="table-img" style="z-index: ${model.data.length - index};" src="${object.cover}" onerror="this.src='./res/defaultAlbumArt.jpg'"></td>
-                        <td class="text-left">${object.title == null ? "N/A" : object.title}</td>
-                        <td class="text-left">${object.artist == null ? "N/A" : object.artist}</td>
-                        <td class="text-left">${object.charter  == null ? "N/A" : object.charter}</td>
-                        <td class="text-center">${object.easyDifficulty == null ? "N/A" : object.easyDifficulty}</td>
-                        <td class="text-center">${object.normalDifficulty == null ? "N/A" : object.normalDifficulty}</td>
-                        <td class="text-center">${object.hardDifficulty == null ? "N/A" : object.hardDifficulty}</td>
-                        <td class="text-center">${object.expertDifficulty == null ? "N/A" : object.expertDifficulty}</td>
-                        <td class="text-center">${object.XDDifficulty == null ? "N/A" : object.XDDifficulty}</td>
-                        <td class="text-center"><a href="${object.zip == null ? "N/A" : object.zip}"><img class="download-btn-size" src="./res/downloadIcon.png"></a></td>
+                        <td class="text-left" style="width: 60px;"><img class="table-img" style="z-index: ${model.data.length - index};" src="${chart.cover}" onerror="this.src='${this._fallbackAlbumArt}'"></td>
+                        <td class="text-left">${chart.title == null ? "N/A" : chart.title}</td>
+                        <td class="text-left">${chart.artist == null ? "N/A" : chart.artist}</td>
+                        <td class="text-left">${chart.charter  == null ? "N/A" : chart.charter}</td>
+                        <td class="text-center">${chart.easyDifficulty == null ? "N/A" : chart.easyDifficulty}</td>
+                        <td class="text-center">${chart.normalDifficulty == null ? "N/A" : chart.normalDifficulty}</td>
+                        <td class="text-center">${chart.hardDifficulty == null ? "N/A" : chart.hardDifficulty}</td>
+                        <td class="text-center">${chart.expertDifficulty == null ? "N/A" : chart.expertDifficulty}</td>
+                        <td class="text-center">${chart.XDDifficulty == null ? "N/A" : chart.XDDifficulty}</td>
+                        <td class="text-center"><a href="${chart.zip == null ? "N/A" : chart.zip}"><img class="download-btn-size" src="${this._downloadIcon}"></a></td>
                     </tr>
                     `
                 }
@@ -47,5 +55,18 @@ export class SearchResultsView extends View<any> {
 
     set pageNumber(pageNumber: number) {
         this._pageNumber = pageNumber;
+    }
+
+    private isInPaginationBoundaries(index: number): boolean {
+        return index >= this.calcLowerPaginationBoundaries()
+            && index <= this.calcUpperPaginationBoundaries();
+    }
+
+    private calcLowerPaginationBoundaries(): number {
+        return (this._pageNumber * this._resultsPerPage) - this._resultsPerPage;
+    }
+
+    private calcUpperPaginationBoundaries(): number {
+        return (this._pageNumber * this._resultsPerPage) - 1;
     }
 }
