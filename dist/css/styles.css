@@ -193,6 +193,14 @@ hr {
     filter: blur(5px);
 }
 
+.gh-logo {
+    transition: 200ms;
+}
+
+.gh-logo:hover {
+    opacity: 60%;
+}
+
 /* Alerts start. */
 .black-box {
     position: absolute;

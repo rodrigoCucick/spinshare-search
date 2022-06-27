@@ -3,7 +3,8 @@
         "target": "ES6",
         "outDir": "dist/js",
         "noEmitOnError": true,
-        "noImplicitAny": true
+        "noImplicitAny": true,
+        "experimentalDecorators": true
     },
-    "include": ["app/**/*"]
+    "include": ["src/**/*"]
 }
