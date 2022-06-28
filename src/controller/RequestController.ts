@@ -27,7 +27,7 @@ export class RequestController {
 
     constructor() {
         this.setEventListeners();
-        this.ping(); // First ping is when an object of this class is instantiated.
+        this.ping();
     }
 
     public searchCharts(): void {
@@ -39,7 +39,7 @@ export class RequestController {
                 this._pagerController.setCounterInitialState(this._searchChartsJson.data.length);
                 this.displayResults();
             } else {
-                // TODO - Rodrigo: Display info dialog about no results found.
+                this._alertController.showAlert("Your search did not return any data!")
                 this.hidePagerAndTable();
             }
         });

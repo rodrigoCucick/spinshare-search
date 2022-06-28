@@ -6,21 +6,17 @@ import { FormController } from "./FormController.js";
 import { PagerController } from "./PagerController.js";
 export class RequestController {
     constructor() {
-        // Search response.
         this._searchChartsJson = null;
-        // URLs.
         this._baseURL = "https://spinsha.re/api/";
         this._pingURL = `${this._baseURL}ping`;
         this._searchChartsURL = `${this._baseURL}searchCharts`;
-        // Views.
         this._apiStatusView = new ApiStatusView("#apiStatusView");
         this._searchResultsView = new SearchResultsView("#searchResultsView");
-        // Controllers.
         this._alertController = new AlertsController();
         this._formController = new FormController();
         this._pagerController = new PagerController();
         this.setEventListeners();
-        this.ping(); // First ping is when an object of this class is instantiated.
+        this.ping();
     }
     searchCharts() {
         RequestService.searchCharts(this._searchChartsURL, this._formController.requestJsonBody)
@@ -32,7 +28,7 @@ export class RequestController {
                 this.displayResults();
             }
             else {
-                // TODO - Rodrigo: Display info dialog about no results found.
+                this._alertController.showAlert("Your search did not return any data!");
                 this.hidePagerAndTable();
             }
         });
@@ -43,21 +39,17 @@ export class RequestController {
             .then((pingJson) => this._apiStatusView.update(pingJson.pong));
     }
     setEventListeners() {
-        // API status div.
         this._apiStatusView.element.addEventListener("click", () => {
             this.ping();
         });
-        // Pager Previous button.
         this._pagerController.prevBtn.addEventListener("click", () => {
             this._pagerController.prevPage();
             this.displayResults();
         });
-        // Pager Next button.
         this._pagerController.nextBtn.addEventListener("click", () => {
             this._pagerController.nextPage();
             this.displayResults();
         });
-        // Form Search button.
         this._formController.searchChartsBtn.addEventListener("click", () => {
             if (this._formController.isDiffRatingInvalid) {
                 this._alertController.showAlert("Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!", this._formController.diffRatingFromInp);

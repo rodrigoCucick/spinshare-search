@@ -1,9 +1,16 @@
+import { domElement } from "../decorator/DomElement.js";
 import { AlertMessageView } from "../view/AlertMessageView.js";
 
 export class AlertsController {
-    private _blackBox: HTMLElement = document.querySelector("#blackBox");
-    private _alertsContainer: HTMLElement = document.querySelector("#alertsContainer");
-    private _alertBtn: HTMLButtonElement = document.querySelector("#btnAlert");
+    @domElement("#blackBox")
+    private _blackBox: HTMLElement;
+
+    @domElement("#alertsContainer")
+    private _alertsContainer: HTMLElement;
+
+    @domElement("#btnAlert")
+    private _alertBtn: HTMLButtonElement;
+
     private _alertMessageView: AlertMessageView = new AlertMessageView("#alertMessageView");
 
     public showAlert(alertMessage: string, element: HTMLElement = null): void {

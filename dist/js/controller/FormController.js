@@ -1,17 +1,13 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+import { domElement } from "../decorator/DomElement.js";
+import { FormStringUtils } from "../utils/FormStringUtils.js";
 export class FormController {
     constructor() {
-        this._searchForm = document.querySelector("#searchForm");
-        this._searchQueryInp = document.querySelector("#searchQuery");
-        this._diffEasyChk = document.querySelector("#diffEasy");
-        this._diffNormalChk = document.querySelector("#diffNormal");
-        this._diffHardChk = document.querySelector("#diffHard");
-        this._diffExpertChk = document.querySelector("#diffExpert");
-        this._diffXDChk = document.querySelector("#diffXD");
-        this._diffRatingFromInp = document.querySelector("#diffRatingFrom");
-        this._diffRatingToInp = document.querySelector("#diffRatingTo");
-        this._showExplicitChk = document.querySelector("#showExplicit");
-        this._searchChartsBtn = document.querySelector("#searchCharts");
-        this._formSpinner = document.querySelector("#formSpinner");
         this.setEventListeners();
     }
     get diffRatingFromInp() {
@@ -45,6 +41,18 @@ export class FormController {
         this.showSearchButton();
     }
     setEventListeners() {
+        this._searchQueryInp.addEventListener("blur", () => {
+            this._searchQueryInp.value =
+                FormStringUtils.removeSpecialCharacters(this._searchQueryInp.value);
+        });
+        this._diffRatingFromInp.addEventListener("blur", () => {
+            this._diffRatingFromInp.value =
+                FormStringUtils.onlyNumbers(FormStringUtils.nullToZero(this._diffRatingFromInp.value));
+        });
+        this._diffRatingToInp.addEventListener("blur", () => {
+            this._diffRatingToInp.value =
+                FormStringUtils.onlyNumbers(FormStringUtils.nullToZero(this._diffRatingToInp.value));
+        });
         this._searchForm.addEventListener("submit", event => {
             event.preventDefault();
         });
@@ -62,3 +70,39 @@ export class FormController {
         this._formSpinner.classList.add("fade-out");
     }
 }
+__decorate([
+    domElement("#searchForm")
+], FormController.prototype, "_searchForm", void 0);
+__decorate([
+    domElement("#searchQuery")
+], FormController.prototype, "_searchQueryInp", void 0);
+__decorate([
+    domElement("#diffEasy")
+], FormController.prototype, "_diffEasyChk", void 0);
+__decorate([
+    domElement("#diffNormal")
+], FormController.prototype, "_diffNormalChk", void 0);
+__decorate([
+    domElement("#diffHard")
+], FormController.prototype, "_diffHardChk", void 0);
+__decorate([
+    domElement("#diffExpert")
+], FormController.prototype, "_diffExpertChk", void 0);
+__decorate([
+    domElement("#diffXD")
+], FormController.prototype, "_diffXDChk", void 0);
+__decorate([
+    domElement("#diffRatingFrom")
+], FormController.prototype, "_diffRatingFromInp", void 0);
+__decorate([
+    domElement("#diffRatingTo")
+], FormController.prototype, "_diffRatingToInp", void 0);
+__decorate([
+    domElement("#showExplicit")
+], FormController.prototype, "_showExplicitChk", void 0);
+__decorate([
+    domElement("#searchCharts")
+], FormController.prototype, "_searchChartsBtn", void 0);
+__decorate([
+    domElement("#formSpinner")
+], FormController.prototype, "_formSpinner", void 0);

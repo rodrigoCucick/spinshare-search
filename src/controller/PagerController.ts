@@ -1,9 +1,18 @@
+import { domElement } from "../decorator/DomElement.js";
+
 export class PagerController {
     // Pager elements.
-    private _pagerContainer: HTMLElement = document.querySelector("#pagerContainer");
-    private _prevBtn: HTMLButtonElement = document.querySelector("#btnPrevious");
-    private _nextBtn: HTMLButtonElement = document.querySelector("#btnNext");
-    private _counter: HTMLElement = document.querySelector("#pageCounter");
+    @domElement("#pagerContainer")
+    private _pagerContainer: HTMLElement;
+
+    @domElement("#btnPrevious")
+    private _prevBtn: HTMLButtonElement;
+
+    @domElement("#btnNext")
+    private _nextBtn: HTMLButtonElement;
+
+    @domElement("#pageCounter")
+    private _counter: HTMLElement;
 
     // Pager control variables.
     private _pageNumber: number;

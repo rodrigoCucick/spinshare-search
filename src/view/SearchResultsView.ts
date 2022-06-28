@@ -17,7 +17,8 @@ export class SearchResultsView extends View<SearchChartsBody> {
         <table class="${this._tableClasses}">
             <thead>
                 <tr>
-                    <th class="text-left">ART</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">ART</th>
                     <th class="text-left">TITLE</th>
                     <th class="text-left">ARTIST</th>
                     <th class="text-left">CHARTER</th>
@@ -34,16 +35,17 @@ export class SearchResultsView extends View<SearchChartsBody> {
                 if (this.isInPaginationBoundaries(index)) {
                     return `
                     <tr>
+                        <td class="text-center" title="Chart ID: ${chart.id}">${index + 1}</td>
                         <td class="text-left" style="width: 60px;"><img class="table-img" style="z-index: ${model.data.length - index};" src="${chart.cover}" onerror="this.src='${this._fallbackAlbumArt}'"></td>
-                        <td class="text-left">${chart.title == null ? "N/A" : chart.title}</td>
-                        <td class="text-left">${chart.artist == null ? "N/A" : chart.artist}</td>
-                        <td class="text-left">${chart.charter  == null ? "N/A" : chart.charter}</td>
+                        <td class="text-left" title="Description: ${chart.description == null ? 'N/A' : chart.description}">${chart.title == '' ? "N/A" : chart.title}</td>
+                        <td class="text-left">${chart.artist == '' ? "N/A" : chart.artist}</td>
+                        <td class="text-left">${chart.charter  == '' ? "N/A" : chart.charter}</td>
                         <td class="text-center">${chart.easyDifficulty == null ? "N/A" : chart.easyDifficulty}</td>
                         <td class="text-center">${chart.normalDifficulty == null ? "N/A" : chart.normalDifficulty}</td>
                         <td class="text-center">${chart.hardDifficulty == null ? "N/A" : chart.hardDifficulty}</td>
                         <td class="text-center">${chart.expertDifficulty == null ? "N/A" : chart.expertDifficulty}</td>
                         <td class="text-center">${chart.XDDifficulty == null ? "N/A" : chart.XDDifficulty}</td>
-                        <td class="text-center"><a href="${chart.zip == null ? "N/A" : chart.zip}"><img class="download-btn-size" src="${this._downloadIcon}"></a></td>
+                        <td class="text-center"><a href="${chart.zip == '' ? "N/A" : chart.zip}"><img class="download-btn-size" src="${this._downloadIcon}" title="Click to download! ${chart.downloads} downloads."></a></td>
                     </tr>
                     `
                 }

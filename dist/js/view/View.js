@@ -2,7 +2,6 @@ export class View {
     constructor(selector) {
         this._element = document.querySelector(selector);
     }
-    // Getter should be used only for adding event listeners to this element.
     get element() {
         return this._element;
     }

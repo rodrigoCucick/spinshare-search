@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Spin Rhythm Charts Search</title>
+    <title>Spin Rhythm XD Charts Search</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./res/favicon.ico">
     <link rel="stylesheet" href="./css/bootstrap.css">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +19,7 @@
     </div>
 
     <div id="apiStatusView" class="api-status-div" title="Click to refresh the API status."></div>
+    <div class="form-bg-container"><img src="./res/formBackground.png" alt=""></div>
 
     <div class="centered-div">
         <h2 class="centered-text">Spin Rhythm XD Custom Charts Search</h2>
@@ -31,39 +33,39 @@
                     </div>
 
                     <div class="form-check form-check-inline margin-top-10">
-                        <label for="diffEasy" class="form-check-label">Easy?</label>
+                        <label for="diffEasy" class="form-check-label cursor-pointer">Easy?</label>
                         <input id="diffEasy" name="diffEasy" class="form-check-input cursor-pointer" type="checkbox" checked>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <label for="diffNormal" class="form-check-label">Normal?</label>
+                        <label for="diffNormal" class="form-check-label cursor-pointer">Normal?</label>
                         <input id="diffNormal" name="diffNormal" class="form-check-input cursor-pointer" type="checkbox" checked>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <label for="diffHard" class="form-check-label">Hard?</label>
+                        <label for="diffHard" class="form-check-label cursor-pointer">Hard?</label>
                         <input id="diffHard" name="diffHard" class="form-check-input cursor-pointer" type="checkbox" checked>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <label for="diffExpert" class="form-check-label">Expert?</label>
+                        <label for="diffExpert" class="form-check-label cursor-pointer">Expert?</label>
                         <input id="diffExpert" name="diffExpert" class="form-check-input cursor-pointer" type="checkbox" checked>
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <label for="diffXD" class="form-check-label">XD?</label>
+                        <label for="diffXD" class="form-check-label cursor-pointer">XD?</label>
                         <input id="diffXD" name="diffXD" class="form-check-input cursor-pointer" type="checkbox" checked>
                     </div>
 
                     <div class="margin-top-10">
                         <label for="diffRatingFrom">Difficulty rating From:</label>
-                        <input id="diffRatingFrom" name="diffRatingFrom" class="number-input" type="number" step="1" value="0">
+                        <input id="diffRatingFrom" name="diffRatingFrom" class="number-input" type="number" min="0" step="1" value="0">
 
                         <label for="diffRatingTo">To:</label>
-                        <input id="diffRatingTo" name="diffRatingTo" class="number-input" type="number" step="1" value="99">
+                        <input id="diffRatingTo" name="diffRatingTo" class="number-input" type="number" min="0" step="1" value="99">
 
                         <div class="form-check form-check-inline">
-                            <label for="showExplicit" class="form-check-label">Show explicit?</label>
+                            <label for="showExplicit" class="form-check-label cursor-pointer">Show explicit?</label>
                             <input id="showExplicit" name="showExplicit" class="form-check-input cursor-pointer" type="checkbox">
                         </div>
                     </div>
@@ -90,7 +92,8 @@
     <hr>
     <footer class="footer-div margin-top-10">
         <p class="margin-top-10">
-            <a href="https://github.com/rodrigoCucick/spinshare-search"><img class="gh-logo" src="./res/githubLogoLight.png" alt="" title="GitHub Repository"></a>
+            <a href="https://github.com/rodrigoCucick/spinshare-search"><img class="footer-img" src="./res/githubLogoLight.png" alt="" title="GitHub Repository"></a>
+            <a href=""><img class="footer-img" src="./res/helpIcon.png" alt="" width="39" height="39" title="Need help installing the custom charts? Click here!"></a>
             <p>Rodrigo M. Cucick, 2022.</p>
         </p>
     </footer>

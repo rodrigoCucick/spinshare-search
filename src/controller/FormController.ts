@@ -1,16 +1,42 @@
+import { domElement } from "../decorator/DomElement.js";
+import { FormStringUtils } from "../utils/FormStringUtils.js";
+
 export class FormController {
-    private _searchForm: HTMLFormElement = document.querySelector("#searchForm");
-    private _searchQueryInp: HTMLInputElement = document.querySelector("#searchQuery");
-    private _diffEasyChk: HTMLInputElement = document.querySelector("#diffEasy");
-    private _diffNormalChk: HTMLInputElement = document.querySelector("#diffNormal");
-    private _diffHardChk: HTMLInputElement = document.querySelector("#diffHard");
-    private _diffExpertChk: HTMLInputElement = document.querySelector("#diffExpert");
-    private _diffXDChk: HTMLInputElement = document.querySelector("#diffXD");
-    private _diffRatingFromInp: HTMLInputElement = document.querySelector("#diffRatingFrom");
-    private _diffRatingToInp: HTMLInputElement = document.querySelector("#diffRatingTo");
-    private _showExplicitChk: HTMLInputElement = document.querySelector("#showExplicit");
-    private _searchChartsBtn: HTMLButtonElement = document.querySelector("#searchCharts");
-    private _formSpinner: HTMLElement = document.querySelector("#formSpinner");
+    @domElement("#searchForm")
+    private _searchForm: HTMLFormElement;
+
+    @domElement("#searchQuery")
+    private _searchQueryInp: HTMLInputElement;
+
+    @domElement("#diffEasy")
+    private _diffEasyChk: HTMLInputElement;
+
+    @domElement("#diffNormal")
+    private _diffNormalChk: HTMLInputElement;
+
+    @domElement("#diffHard")
+    private _diffHardChk: HTMLInputElement;
+
+    @domElement("#diffExpert")
+    private _diffExpertChk: HTMLInputElement;
+
+    @domElement("#diffXD")
+    private _diffXDChk: HTMLInputElement;
+
+    @domElement("#diffRatingFrom")
+    private _diffRatingFromInp: HTMLInputElement;
+
+    @domElement("#diffRatingTo")
+    private _diffRatingToInp: HTMLInputElement;
+
+    @domElement("#showExplicit")
+    private _showExplicitChk: HTMLInputElement;
+
+    @domElement("#searchCharts")
+    private _searchChartsBtn: HTMLButtonElement;
+
+    @domElement("#formSpinner")
+    private _formSpinner: HTMLElement;
 
     constructor() {
         this.setEventListeners();
@@ -53,6 +79,21 @@ export class FormController {
     }
 
     private setEventListeners(): void {
+        this._searchQueryInp.addEventListener("blur", () => {
+            this._searchQueryInp.value =
+                FormStringUtils.removeSpecialCharacters(this._searchQueryInp.value);
+        });
+
+        this._diffRatingFromInp.addEventListener("blur", () => {
+            this._diffRatingFromInp.value =
+                FormStringUtils.onlyNumbers(FormStringUtils.nullToZero(this._diffRatingFromInp.value));
+        });
+
+        this._diffRatingToInp.addEventListener("blur", () => {
+            this._diffRatingToInp.value =
+                FormStringUtils.onlyNumbers(FormStringUtils.nullToZero(this._diffRatingToInp.value));
+        });
+
         this._searchForm.addEventListener("submit", event => {
             event.preventDefault();
         });
