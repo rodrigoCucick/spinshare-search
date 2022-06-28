@@ -1,7 +1,7 @@
 # SpinShare Search
-An alternative application to search and download custom charts for Spin Rhythm XD.
+## Link: [https://spinshare-search.vercel.app/](https://spinshare-search.vercel.app/)
 
-Link: [https://spinshare-search.vercel.app/](https://spinshare-search.vercel.app/)
+An alternative application to search and download custom charts for Spin Rhythm XD.
 
 This app aims to be lightweight and easy to use, with minimum visual distractions.
 
