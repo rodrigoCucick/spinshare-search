@@ -18,6 +18,7 @@ Some planned features:
 * /songs/new (newest 12 chart)
 * /songs/updated (12 recently updated charts).
 2. Add ordering functionality to the results table.
+
 3. Add more pagination functionalities, such as:
 * Number os results per page.
 * Jump to page X.
