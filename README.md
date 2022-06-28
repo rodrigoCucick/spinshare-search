@@ -21,6 +21,6 @@ Some planned features:
 2. Add ordering functionality to the results table.
 
 3. Add more pagination functionalities, such as:
-* Number os results per page.
+* Set the number of results per page.
 * Jump to page X.
 * Buttons to go directly to the first or last page.
