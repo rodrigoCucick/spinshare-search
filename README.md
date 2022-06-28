@@ -7,11 +7,11 @@ This app aims to be lightweight and easy to use, with minimum visual distraction
 
 It uses the **/searchCharts** endpoint of the **SpinShare API**.
 
+Main search form:
 ![image](https://user-images.githubusercontent.com/16089829/176086717-4e64373e-4b53-431e-ba31-d1dc11ae86fc.png)
-_Main search form._
 
+Example of a search result set:
 ![image](https://user-images.githubusercontent.com/16089829/176086743-6dc79208-5edc-460d-8a41-2d94e7b40d2b.png)
-_Example of a search result set._
 
 Some planned features:
 1. Work with different API endpoints, such as:
