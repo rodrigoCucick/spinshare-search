@@ -8,6 +8,7 @@ This app aims to be lightweight and easy to use, with minimum visual distraction
 It uses the **/searchCharts** endpoint of the **SpinShare API**.
 
 Main search form:
+
 ![image](https://user-images.githubusercontent.com/16089829/176086717-4e64373e-4b53-431e-ba31-d1dc11ae86fc.png)
 
 Example of a search result set:
