@@ -16,7 +16,7 @@ Example of a search result set:
 
 Some planned features:
 1. Work with different API endpoints, such as:
-* /songs/new (newest 12 chart)
+* /songs/new (12 recently uploaded charts).
 * /songs/updated (12 recently updated charts).
 2. Add ordering functionality to the results table.
 

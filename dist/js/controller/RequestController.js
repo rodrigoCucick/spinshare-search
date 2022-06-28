@@ -10,11 +10,10 @@ export class RequestController {
         this._baseURL = "https://spinsha.re/api/";
         this._pingURL = `${this._baseURL}ping`;
         this._searchChartsURL = `${this._baseURL}searchCharts`;
-        this._apiStatusView = new ApiStatusView("#apiStatusView");
-        this._searchResultsView = new SearchResultsView("#searchResultsView");
-        this._alertController = new AlertsController();
         this._formController = new FormController();
         this._pagerController = new PagerController();
+        this._apiStatusView = new ApiStatusView("#apiStatusView");
+        this._searchResultsView = new SearchResultsView("#searchResultsView");
         this.setEventListeners();
         this.ping();
     }
@@ -28,7 +27,7 @@ export class RequestController {
                 this.displayResults();
             }
             else {
-                this._alertController.showAlert("Your search did not return any data!");
+                AlertsController.showAlert("Your search did not return any data!");
                 this.hidePagerAndTable();
             }
         });
@@ -52,7 +51,7 @@ export class RequestController {
         });
         this._formController.searchChartsBtn.addEventListener("click", () => {
             if (this._formController.isDiffRatingInvalid) {
-                this._alertController.showAlert("Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!", this._formController.diffRatingFromInp);
+                AlertsController.showAlert("Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!", this._formController.diffRatingFromInp);
                 return;
             }
             this._formController.startLoadingAnimation();

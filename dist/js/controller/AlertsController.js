@@ -7,46 +7,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { domElement } from "../decorator/DomElement.js";
 import { AlertMessageView } from "../view/AlertMessageView.js";
 export class AlertsController {
-    constructor() {
-        this._alertMessageView = new AlertMessageView("#alertMessageView");
-    }
-    showAlert(alertMessage, element = null) {
+    static showAlert(alertMessage, element = null) {
         this.showBlackBox();
         this.showAlertsContainer();
         this._alertMessageView.update(alertMessage);
         this.setAlertBtnEventListeners(element);
     }
-    setAlertBtnEventListeners(element) {
+    static setLargePadding() {
+        this._alertsContainer.classList.remove(this._smallPaddingClass);
+        this._alertsContainer.classList.add(this._largePaddingClass);
+    }
+    static setSmallPadding() {
+        this._alertsContainer.classList.remove(this._largePaddingClass);
+        this._alertsContainer.classList.add(this._smallPaddingClass);
+    }
+    static setAlertBtnEventListeners(element) {
         this._alertBtn.addEventListener("click", () => {
             this.hideAlert();
             if (element !== null) {
                 element.focus();
             }
+            this.setLargePadding();
         });
     }
-    hideAlert() {
+    static hideAlert() {
         this.hideAlertsContainer();
         this.hideBlackBox();
     }
-    showAlertsContainer() {
+    static showAlertsContainer() {
         this._alertsContainer.classList.remove("hidden");
     }
-    hideAlertsContainer() {
+    static hideAlertsContainer() {
         this._alertsContainer.classList.add("hidden");
     }
-    showBlackBox() {
+    static showBlackBox() {
         this._blackBox.classList.remove("hidden");
     }
-    hideBlackBox() {
+    static hideBlackBox() {
         this._blackBox.classList.add("hidden");
     }
 }
+AlertsController._alertMessageView = new AlertMessageView("#alertMessageView");
+AlertsController._largePaddingClass = "alerts-padding-top-35";
+AlertsController._smallPaddingClass = "alerts-padding-top-12";
 __decorate([
     domElement("#blackBox")
-], AlertsController.prototype, "_blackBox", void 0);
+], AlertsController, "_blackBox", void 0);
 __decorate([
     domElement("#alertsContainer")
-], AlertsController.prototype, "_alertsContainer", void 0);
+], AlertsController, "_alertsContainer", void 0);
 __decorate([
     domElement("#btnAlert")
-], AlertsController.prototype, "_alertBtn", void 0);
+], AlertsController, "_alertBtn", void 0);

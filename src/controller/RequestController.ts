@@ -16,14 +16,13 @@ export class RequestController {
     private _pingURL: string = `${this._baseURL}ping`;
     private _searchChartsURL: string = `${this._baseURL}searchCharts`;
 
+    // Controllers.
+    private _formController: FormController = new FormController();
+    private _pagerController: PagerController = new PagerController();
+
     // Views.
     private _apiStatusView: ApiStatusView = new ApiStatusView("#apiStatusView");
     private _searchResultsView: SearchResultsView = new SearchResultsView("#searchResultsView");
-
-    // Controllers.
-    private _alertController: AlertsController = new AlertsController();
-    private _formController: FormController = new FormController();
-    private _pagerController: PagerController = new PagerController();
 
     constructor() {
         this.setEventListeners();
@@ -39,7 +38,7 @@ export class RequestController {
                 this._pagerController.setCounterInitialState(this._searchChartsJson.data.length);
                 this.displayResults();
             } else {
-                this._alertController.showAlert("Your search did not return any data!")
+                AlertsController.showAlert("Your search did not return any data!")
                 this.hidePagerAndTable();
             }
         });
@@ -73,7 +72,7 @@ export class RequestController {
         // Form Search button.
         this._formController.searchChartsBtn.addEventListener("click", () => {
             if (this._formController.isDiffRatingInvalid) {
-                this._alertController.showAlert(
+                AlertsController.showAlert(
                     "Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!",
                     this._formController.diffRatingFromInp
                 );
