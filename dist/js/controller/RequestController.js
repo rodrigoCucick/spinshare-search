@@ -1,11 +1,11 @@
+import { AlertMessages } from "../enum/AlertMessages.js";
 import { RequestService } from "../service/RequestService.js";
 import { ApiStatusView } from "../view/ApiStatusView.js";
 import { SearchResultsView } from "../view/SearchResultsView.js";
-import { AlertsController } from "./AlertsController.js";
 import { FormController } from "./FormController.js";
 import { PagerController } from "./PagerController.js";
 export class RequestController {
-    constructor() {
+    constructor(alertsController) {
         this._searchChartsJson = null;
         this._baseURL = "https://spinsha.re/api/";
         this._pingURL = `${this._baseURL}ping`;
@@ -14,6 +14,7 @@ export class RequestController {
         this._pagerController = new PagerController();
         this._apiStatusView = new ApiStatusView("#apiStatusView");
         this._searchResultsView = new SearchResultsView("#searchResultsView");
+        this._alertsController = alertsController;
         this.setEventListeners();
         this.ping();
     }
@@ -27,7 +28,7 @@ export class RequestController {
                 this.displayResults();
             }
             else {
-                AlertsController.showAlert("Your search did not return any data!");
+                this._alertsController.showAlert(AlertMessages.ALERT_NO_DATA_FOUND);
                 this.hidePagerAndTable();
             }
         });
@@ -51,7 +52,7 @@ export class RequestController {
         });
         this._formController.searchChartsBtn.addEventListener("click", () => {
             if (this._formController.isDiffRatingInvalid) {
-                AlertsController.showAlert("Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!", this._formController.diffRatingFromInp);
+                this._alertsController.showAlert(AlertMessages.ALERT_DIFF_RATING_INVALID);
                 return;
             }
             this._formController.startLoadingAnimation();

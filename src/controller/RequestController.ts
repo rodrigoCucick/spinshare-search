@@ -1,3 +1,4 @@
+import { AlertMessages } from "../enum/AlertMessages.js";
 import { RequestService } from "../service/RequestService.js";
 import { PingBody } from "../type/PingBody.js";
 import { SearchChartsBody } from "../type/SearchChartsBody.js";
@@ -17,6 +18,7 @@ export class RequestController {
     private _searchChartsURL: string = `${this._baseURL}searchCharts`;
 
     // Controllers.
+    private _alertsController: AlertsController;
     private _formController: FormController = new FormController();
     private _pagerController: PagerController = new PagerController();
 
@@ -24,7 +26,8 @@ export class RequestController {
     private _apiStatusView: ApiStatusView = new ApiStatusView("#apiStatusView");
     private _searchResultsView: SearchResultsView = new SearchResultsView("#searchResultsView");
 
-    constructor() {
+    constructor(alertsController: AlertsController) {
+        this._alertsController = alertsController;
         this.setEventListeners();
         this.ping();
     }
@@ -38,7 +41,7 @@ export class RequestController {
                 this._pagerController.setCounterInitialState(this._searchChartsJson.data.length);
                 this.displayResults();
             } else {
-                AlertsController.showAlert("Your search did not return any data!")
+                this._alertsController.showAlert(AlertMessages.ALERT_NO_DATA_FOUND)
                 this.hidePagerAndTable();
             }
         });
@@ -72,10 +75,7 @@ export class RequestController {
         // Form Search button.
         this._formController.searchChartsBtn.addEventListener("click", () => {
             if (this._formController.isDiffRatingInvalid) {
-                AlertsController.showAlert(
-                    "Difficulty rating <b>FROM</b> cannot be greater than difficulty rating <b>TO</b>!",
-                    this._formController.diffRatingFromInp
-                );
+                this._alertsController.showAlert(AlertMessages.ALERT_DIFF_RATING_INVALID);
                 return;
             }
             this._formController.startLoadingAnimation();
